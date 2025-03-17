@@ -1,12 +1,13 @@
-def get_book_as_string(book_name):
-    with open("books/" + book_name + ".txt") as f:
+import sys
+
+from stats import count_words
+
+
+def get_book_as_string(book_path):
+    with open(book_path) as f:
         file_contents = f.read()
 
     return file_contents
-
-
-def count_words(content):
-    return len(content.split())
 
 
 def count_characters(content):
@@ -24,7 +25,7 @@ def count_characters(content):
 
 
 def print_report(content):
-    print("--- Begin report of books/frankenstein.txt ---")
+    print("--- Begin report of books ---")
 
     total_words = count_words(content)
     print(f"{total_words} words found in the document")
@@ -40,11 +41,17 @@ def print_report(content):
 
 
 def main():
-    frankenstein_book = get_book_as_string("frankenstein")
+    args = sys.argv
+
+    if len(args) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    book = get_book_as_string(sys.argv[1])
 
     # print(count_words(frankenstein_book))
     # print(count_characters(frankenstein_book))
-    print_report(frankenstein_book)
+    print_report(book)
 
 
 if __name__ == "__main__":
